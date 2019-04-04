@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 class Quadl:
 
     API_KEY = 'JUFS6eBwXFLthN3_ARFz'
+    response = None
     start_date = None
     end_date = None
     database_code = None
@@ -21,7 +22,7 @@ class Quadl:
     data = None
     column_names = None
 
-    def __init__(self: "Quadl",
+    def __init__(self,
                  start_date: str = None,
                  end_date: str = None,
                  database_code: str = 'FSE',
@@ -35,6 +36,8 @@ class Quadl:
         self.order = order
         self.format = format
 
+        self.data, self.column_names = self.__get_dataset()
+
     def __get_dataset(self):
         """
         Go out and gets the data based on URL passed
@@ -44,15 +47,16 @@ class Quadl:
             f"end_date={self.end_date}&order={self.order}"
         logger.debug(url)
 
-        json_response = requests.get(url).json()
+        self.response = requests.get(url)
+        json_response = self.response.json()
         logger.debug(json_response)
+
         # check to make sure the response looks right
         assert json_response != None
         assert 'dataset_data' in json_response
 
-        self.dataset_data = json_response['dataset_data']
-        self.data = self.dataset_data['data']
-        self.column_names = self.dataset_data['column_names']
+        dataset_data = json_response['dataset_data']
+        return (dataset_data['data'], dataset_data['column_names'])
 
     def sort_data(self, data: list, index: int) -> list:
         """
@@ -105,19 +109,23 @@ class Quadl:
         # sum of all volume
         total_volume = 0.0
 
+        date_index = self.column_names.index('Date')
         open_index = self.column_names.index('Open')
         high_index = self.column_names.index('High')
         low_index = self.column_names.index('Low')
         volume_index = self.column_names.index('Traded Volume')
         close_index = self.column_names.index('Close')
 
-        # counter
+        # general counter
         count = 1
+        # only increment this if we have a volume for the day
+        volume_count = 0
+        # Calculate most stats at once to keep it mostly O(n)
         for entry in self.data:
             # calculate min/max open price
             current_open_price = entry[open_index]
             logger.debug(
-                f'count: {count} current_open_price: {current_open_price} current_open_price type: {type(current_open_price)}')
+                f'date: {entry[date_index]} current_open_price: {current_open_price} current_open_price type: {type(current_open_price)}')
             if current_open_price != None:
                 if min_open_price == 0 or current_open_price < min_open_price:
                     min_open_price = current_open_price
@@ -146,31 +154,48 @@ class Quadl:
             volume = entry[volume_index]
             if volume != None:
                 total_volume += volume
+                volume_count += 1
 
             count += 1
 
-        # copy the list then calculate median trading volume
-        data_length = len(self.data)
-        sorted_data = self.sort_data(self.data, volume_index)
-        median_volume = 0.0
-        median_index = data_length // 2
-        if data_length == 1:
-            median_volume = sorted_data[0][volume_index]
-        elif data_length % 2 > 0:
-            median_volume = sorted_data[median_index][volume_index]
-        else:
-            median_volume = (sorted_data[median_index][volume_index] +
-                             sorted_data[median_index - 1][volume_index]) / 2
-
         return_dict['min_open_price'] = min_open_price
         return_dict['max_open_price'] = max_open_price
-        return_dict['max_daily_change'] = max_daily_change
-        return_dict['max_two_day_change'] = max_two_day_change
+        return_dict['max_daily_change'] = round(max_daily_change, 2)
+        return_dict['max_two_day_change'] = round(max_two_day_change, 2)
         # calculate average volume
-        return_dict['average_trading_volume'] = total_volume / (count - 1)
-        return_dict['median_volume'] = median_volume
+        if volume_count > 1:
+            return_dict['average_trading_volume'] = round(
+                total_volume / (volume_count), 2)
+        else:
+            return_dict['average_trading_volume'] = 0.0
+
+        return_dict['median_volume'] = self.calculate_median(
+            self.data, volume_index)
 
         return return_dict
+
+    def calculate_median(self, data_list: list, index: int) -> float:
+        """
+        given a 2D list and and index of column, calculate median of that column
+        """
+        # copy the list then calculate median trading volume
+        data_length = len(data_list)
+        sorted_data = self.sort_data(data_list, index)
+        median = 0.0
+        median_index = data_length // 2
+        if data_length == 1:
+            median = sorted_data[0][index]
+        elif data_length % 2 > 0:
+            median = sorted_data[median_index][index]
+        else:
+            """
+            if list is even, we average the middle two numbers
+            ie, if list length is 6, we take number at index 2 and 3 and average them
+            """
+            median = (sorted_data[median_index][index] +
+                      sorted_data[median_index - 1][index]) / 2
+
+        return round(median, 2)
 
 
 if __name__ == '__main__':
@@ -199,16 +224,12 @@ if __name__ == '__main__':
 
     # quadl = Quadl(start_date = '2017-01-01', end_date = '2017-12-31')
     quadl = Quadl(start_date=start_date, end_date=end_date)
-    response = quadl.dataset_data
-    logger.debug(pformat(response))
     quadl.summary()
 
-    return_dict = quadl.calculate_stats()
-
-    logger.info(f'min open: {return_dict["min_open_price"]}')
-    logger.info(f'max open: {return_dict["max_open_price"]}')
-    logger.info(f'max daily chnage: {return_dict["max_daily_change"]}')
-    logger.info(f'max 2 day chnage: {return_dict["max_two_day_change"]}')
-    logger.info(
-        f'average trading volume: {return_dict["average_trading_volume"]}')
-    logger.info(f'median volume: {return_dict["median_volume"]}')
+    stats = quadl.calculate_stats()
+    print(f'min open: {stats["min_open_price"]}')
+    print(f'max open: {stats["max_open_price"]}')
+    print(f'max daily change: {stats["max_daily_change"]}')
+    print(f'max 2 day change: {stats["max_two_day_change"]}')
+    print(f'average trading volume: {stats["average_trading_volume"]}')
+    print(f'median volume: {stats["median_volume"]}')
