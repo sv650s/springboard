@@ -1,68 +1,66 @@
 [TerminalIPythonApp] WARNING | Subcommand `ipython notebook` is deprecated and will be removed in future versions.
 [TerminalIPythonApp] WARNING | You likely want to use `jupyter notebook` in the future
-[I 07:17:08.772 NotebookApp] Copying /home/ubuntu/.ipython/profile_default/static/custom/custom.js -> /home/ubuntu/.jupyter/custom/custom.js
-[I 07:17:08.782 NotebookApp] Writing notebook server cookie secret to /home/ubuntu/.local/share/jupyter/runtime/notebook_cookie_secret
-[W 07:17:08.806 NotebookApp] All authentication is disabled.  Anyone who can connect to this server will be able to run code.
+[I 06:47:43.389 NotebookApp] Copying /home/ubuntu/.ipython/profile_default/static/custom/custom.js -> /home/ubuntu/.jupyter/custom/custom.js
+[I 06:47:43.413 NotebookApp] Writing notebook server cookie secret to /home/ubuntu/.local/share/jupyter/runtime/notebook_cookie_secret
+[W 06:47:43.465 NotebookApp] All authentication is disabled.  Anyone who can connect to this server will be able to run code.
 /usr/local/anaconda/lib/python3.6/importlib/_bootstrap.py:205: RuntimeWarning: compiletime version 3.5 of module 'tensorflow.python.framework.fast_tensor_util' does not match runtime version 3.6
   return f(*args, **kwds)
-[I 07:17:10.246 NotebookApp] jupyter_tensorboard extension loaded.
-[I 07:17:10.250 NotebookApp] Serving notebooks from local directory: /
-[I 07:17:10.250 NotebookApp] 0 active kernels 
-[I 07:17:10.250 NotebookApp] The Jupyter Notebook is running at: http://172.17.0.3:8888/
-[I 07:17:10.250 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
-[W 07:17:10.250 NotebookApp] No web browser found: could not locate runnable browser.
-[I 07:17:10.252 NotebookApp] 302 GET / (10.0.148.12) 0.60ms
-[I 07:17:12.988 NotebookApp] 302 GET / (10.0.148.12) 0.60ms
-[I 07:17:13.177 NotebookApp] 302 GET / (10.0.148.12) 0.47ms
-[I 07:17:13.830 NotebookApp] 302 GET / (10.0.125.128) 0.56ms
-[I 07:20:14.781 NotebookApp] Writing notebook-signing key to /home/ubuntu/.local/share/jupyter/notebook_secret
-[W 07:20:14.782 NotebookApp] Notebook mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb is not trusted
-[I 07:20:15.145 NotebookApp] Kernel started: 540b3f13-5fc6-4730-9a28-0c568e3e3df3
+[I 06:47:47.345 NotebookApp] jupyter_tensorboard extension loaded.
+[I 06:47:47.353 NotebookApp] Serving notebooks from local directory: /
+[I 06:47:47.353 NotebookApp] 0 active kernels 
+[I 06:47:47.353 NotebookApp] The Jupyter Notebook is running at: http://172.17.0.3:8888/
+[I 06:47:47.353 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[W 06:47:47.353 NotebookApp] No web browser found: could not locate runnable browser.
+[I 06:47:47.356 NotebookApp] 302 GET / (52.203.93.90) 0.64ms
+[I 06:47:47.541 NotebookApp] 302 GET / (52.203.78.124) 0.63ms
+[I 06:47:49.856 NotebookApp] 302 GET / (52.203.93.90) 0.65ms
+[I 06:47:49.942 NotebookApp] 302 GET / (52.203.93.90) 0.65ms
+[I 06:47:50.116 NotebookApp] 302 GET / (52.203.93.90) 0.47ms
+[I 06:47:51.531 NotebookApp] 302 GET / (52.203.93.90) 0.64ms
+[I 06:48:43.389 NotebookApp] Writing notebook-signing key to /home/ubuntu/.local/share/jupyter/notebook_secret
+[W 06:48:43.390 NotebookApp] Notebook mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb is not trusted
+[I 06:48:43.773 NotebookApp] Kernel started: 65781654-17b3-41c4-bd32-a52e04e76e5c
 Setting default log level to "WARN".
 To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
-19/04/02 07:20:25 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-[W 07:20:25.525 NotebookApp] Timeout waiting for kernel_info reply from 540b3f13-5fc6-4730-9a28-0c568e3e3df3
-19/04/02 07:20:39 WARN metastore.ObjectStore: Failed to get database global_temp, returning NoSuchObjectException
-[I 07:20:39.811 NotebookApp] Adapting to protocol v5.1 for kernel 540b3f13-5fc6-4730-9a28-0c568e3e3df3
-[I 07:22:16.504 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
-[I 07:28:15.751 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
-[I 07:30:15.453 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
-[I 07:32:15.800 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
-[I 07:34:15.532 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
-[I 07:38:15.653 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
-[I 07:40:16.466 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
-[I 07:42:16.543 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
-[I 07:48:15.983 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
-[I 07:50:15.624 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
-[I 07:52:15.667 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
-[I 07:54:15.901 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
-[I 07:56:39.001 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
-[I 07:56:39.181 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
-[I 08:00:50.044 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
-[I 08:06:14.133 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
-[W 08:17:55.528 NotebookApp] WebSocket ping timeout after 119909 ms.
-[I 08:37:02.932 NotebookApp] 302 GET / (10.0.125.128) 0.62ms
-[W 08:38:32.942 NotebookApp] WebSocket ping timeout after 90001 ms.
-[I 11:35:37.317 NotebookApp] 302 GET / (10.0.148.12) 0.55ms
-[W 11:39:07.326 NotebookApp] WebSocket ping timeout after 119907 ms.
-[I 12:48:59.100 NotebookApp] 302 GET / (10.0.148.12) 0.58ms
-[W 12:52:29.110 NotebookApp] WebSocket ping timeout after 119828 ms.
-[W 13:40:06.421 NotebookApp] WebSocket ping timeout after 119916 ms.
-[I 15:15:18.648 NotebookApp] 302 GET / (10.0.125.128) 0.68ms
-[I 15:40:09.811 NotebookApp] 302 GET / (10.0.148.12) 0.53ms
-[I 15:40:09.818 NotebookApp] 302 GET / (10.0.148.12) 0.43ms
-[I 15:40:10.067 NotebookApp] 302 GET / (10.0.148.12) 0.56ms
-[W 15:40:19.291 NotebookApp] 404 GET /favicon.ico (10.0.125.128) 11.31ms referer=https://workona.com/w/fevihr/0/general
-[W 16:30:53.183 NotebookApp] WebSocket ping timeout after 119912 ms.
-[I 16:39:49.437 NotebookApp] 302 GET / (10.0.125.128) 0.53ms
-[I 17:03:53.229 NotebookApp] 302 GET / (10.0.148.12) 0.52ms
-[W 17:50:49.446 NotebookApp] WebSocket ping timeout after 119918 ms.
-[I 21:02:33.272 NotebookApp] 302 GET / (10.0.125.128) 0.57ms
-[I 21:02:33.880 NotebookApp] 302 GET / (10.0.148.12) 0.55ms
-[W 22:51:33.285 NotebookApp] WebSocket ping timeout after 119917 ms.
-[I 23:01:57.779 NotebookApp] 302 GET / (10.0.125.128) 0.53ms
-[W 23:52:27.790 NotebookApp] WebSocket ping timeout after 119914 ms.
-[I 23:53:35.942 NotebookApp] 302 GET / (10.0.148.12) 0.50ms
-[I 23:53:36.566 NotebookApp] 302 GET / (10.0.125.128) 0.80ms
-[I 23:55:55.584 NotebookApp] 302 GET / (10.0.125.128) 0.62ms
-[I 23:55:55.774 NotebookApp] 302 GET / (10.0.125.128) 0.43ms
+19/04/04 06:48:47 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[W 06:48:54.141 NotebookApp] Timeout waiting for kernel_info reply from 65781654-17b3-41c4-bd32-a52e04e76e5c
+19/04/04 06:48:55 WARN metastore.ObjectStore: Failed to get database global_temp, returning NoSuchObjectException
+[I 06:48:55.461 NotebookApp] Adapting to protocol v5.1 for kernel 65781654-17b3-41c4-bd32-a52e04e76e5c
+[I 06:49:00.263 NotebookApp] Kernel restarted: 65781654-17b3-41c4-bd32-a52e04e76e5c
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+19/04/04 06:49:03 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/04/04 06:49:09 WARN metastore.ObjectStore: Failed to get database global_temp, returning NoSuchObjectException
+[I 06:49:10.164 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
+[I 06:49:10.246 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
+[I 06:50:44.457 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
+[I 07:02:32.597 NotebookApp] Kernel restarted: 65781654-17b3-41c4-bd32-a52e04e76e5c
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+19/04/04 07:02:35 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/04/04 07:02:41 WARN metastore.ObjectStore: Failed to get database global_temp, returning NoSuchObjectException
+[I 07:02:44.161 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
+[I 08:19:17.603 NotebookApp] 302 GET / (10.0.148.12) 0.67ms
+[I 08:19:18.118 NotebookApp] Kernel restarted: 65781654-17b3-41c4-bd32-a52e04e76e5c
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+19/04/04 08:19:21 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/04/04 08:19:26 WARN metastore.ObjectStore: Failed to get database global_temp, returning NoSuchObjectException
+[I 08:20:08.688 NotebookApp] Kernel restarted: 65781654-17b3-41c4-bd32-a52e04e76e5c
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+19/04/04 08:20:11 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/04/04 08:20:17 WARN metastore.ObjectStore: Failed to get database global_temp, returning NoSuchObjectException
+[I 08:20:18.121 NotebookApp] 302 GET / (10.0.125.128) 0.72ms
+[I 08:20:44.301 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
+[I 08:21:35.750 NotebookApp] Kernel restarted: 65781654-17b3-41c4-bd32-a52e04e76e5c
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+19/04/04 08:21:38 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/04/04 08:21:44 WARN metastore.ObjectStore: Failed to get database global_temp, returning NoSuchObjectException
+[I 08:21:58.851 NotebookApp] Kernel restarted: 65781654-17b3-41c4-bd32-a52e04e76e5c
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+19/04/04 08:22:01 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/04/04 08:22:07 WARN metastore.ObjectStore: Failed to get database global_temp, returning NoSuchObjectException
+[I 08:22:44.473 NotebookApp] Saving file at /mnt/aic-5_1_10-api-mini-project/api_data_wrangling_mini_project.ipynb
