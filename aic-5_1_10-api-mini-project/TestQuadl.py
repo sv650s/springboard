@@ -79,8 +79,12 @@ class TestQuadl(unittest.TestCase):
         average_trading_volume = stats['average_trading_volume']
         assert average_trading_volume == round(self.df['Traded Volume'].mean(), 2), \
             f"average traded volumen should be {round(self.df['Traded Volume'].mean(), 2)} but got {average_trading_volume}"
-        
+
         # TODO: check max 2 day change
+        self.df = self.df.assign(two_day_change=self.df['Close'].rolling(
+            window=2, center=False).apply(lambda x: round(x[1] - x[0], 2)))
+        self.assertEquals(stats['max_two_day_change'], self.df.two_day_change.max(),
+                          f"max 2 day change should be {self.df.two_day_change.max()} got {stats['max_two_day_change']}")
 
 
 if __name__ == '__main__':

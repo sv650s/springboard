@@ -118,6 +118,7 @@ class Quadl:
         count = 1
         # only increment this if we have a volume for the day
         volume_count = 0
+        previous_closing_price = 0.0
         # Calculate most stats at once to keep it mostly O(n)
         for entry in self.data:
             # calculate min/max open price
@@ -139,14 +140,12 @@ class Quadl:
                     max_daily_change = current_change
 
             # largest change between 2 days based on closing price
-            previous_closing_price = 0.0
+            current_closing_price = entry[close_index]
             if count > 1:
-                current_closing_price = entry[close_index]
                 closing_diff = current_closing_price - previous_closing_price
                 if closing_diff > max_two_day_change:
                     max_two_day_change = closing_diff
-            else:
-                previous_closing_price = entry[close_index]
+            previous_closing_price = current_closing_price
 
             # total volume for the year
             volume = entry[volume_index]

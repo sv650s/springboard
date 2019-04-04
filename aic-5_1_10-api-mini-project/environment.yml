@@ -7,5 +7,6 @@ dependencies:
   - rope
   - autopep8
   - pandas
+  - unittest2
 prefix: /Users/vinceluk/anaconda3/envs/aic-5_1_10-api-mini-project
 
