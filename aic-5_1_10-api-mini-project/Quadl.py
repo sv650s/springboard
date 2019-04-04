@@ -36,6 +36,7 @@ class Quadl:
         self.order = order
         self.format = format
 
+        # TODO: figure out how to do this better so we don't have to make the call during unit tests
         self.data, self.column_names = self.__get_dataset()
 
     def __get_dataset(self):
@@ -70,13 +71,10 @@ class Quadl:
         """
         Inspects the response data from Quadl API call
         """
-        if (self.dataset_data == None):
-            self.__get_dataset()
-
-        if (self.dataset_data != None):
+        if self.data != None and self.column_names != None:
             print('Summary of Data:')
-            print(f'\tstart date: {self.dataset_data["start_date"]}')
-            print(f'\tend date: {self.dataset_data["end_date"]}')
+            print(f'\tstart date: {self.start_date}')
+            print(f'\tend date: {self.end_date}')
             print(f'\tcolumn names: {self.column_names}')
             print(f'\tdata entries: {len(self.data)}')
         else:
@@ -95,8 +93,8 @@ class Quadl:
         min_open_price, max_open_price, max_two_day_change, average_trading_volume, 
         median_trading_volume
         """
-        if (self.dataset_data == None):
-            self.__get_dataset()
+        if self.data == None:
+            return None
 
         return_dict = {}
 
