@@ -3,6 +3,7 @@ from unittest.mock import MagicMock
 import logging
 from Quadl import Quadl
 from pprint import pformat
+import pandas as pd
 
 logger = logging.getLogger(__name__)
 
@@ -11,13 +12,14 @@ class TestQuadl(unittest.TestCase):
 
     def setUp(self):
         self.quadl = Quadl(start_date='2017-01-01', end_date='2017-01-04')
+        # make a copy of this list
         self.quadl.data = [['2017-01-02', 34.99, 35.94, 34.99, 35.8, None, 44700.0, 1590561.0, None, None, None],
                            ['2017-01-03', 35.9, 35.93, 35.34, 35.48, None,
-                               70618.0, 2515473.0, None, None, None],
+                            70618.0, 2515473.0, None, None, None],
                            ['2017-01-04', 35.48, 35.51, 34.75, 35.19,
-                               None, 54408.0, 1906810.0, None, None, None],
+                            None, 54408.0, 1906810.0, None, None, None],
                            ['2017-01-05', 35.48, 50.00, 50.00, 35.19,
-                               None, None, 1906810.0, None, None, None],
+                            None, 54408.0, 1906810.0, None, None, None],
                            ]
         self.quadl.column_names = ['Date', 'Open', 'High', 'Low', 'Close', 'Change', 'Traded Volume',
                                    'Turnover', 'Last Price of the Day', 'Daily Traded Units', 'Daily Turnover']
@@ -28,9 +30,16 @@ class TestQuadl(unittest.TestCase):
         """
         Test to make sure we are sorting the data array properly
         """
-        unsorted_list = self.quadl.data
+        unsorted_list = [['2017-01-02', 34.99, 35.94, 34.99, 35.8, None, 44700.0, 1590561.0, None, None, None],
+                         ['2017-01-03', 35.9, 35.93, 35.34, 35.48, None,
+                          70618.0, 2515473.0, None, None, None],
+                         ['2017-01-04', 35.48, 35.51, 34.75, 35.19,
+                          None, 54408.0, 1906810.0, None, None, None],
+                         ['2017-01-05', 35.48, 50.00, 50.00, 35.19,
+                          None, 54408.0, 1906810.0, None, None, None],
+                         ]
         assert len(
-            unsorted_list) == 4, f"list should be length of 4 but found {len(list)}"
+            unsorted_list) == 4, f"list should be length of 4 but found {len(unsorted_list)}"
 
         # sort by index 3 should give us 04, 02, 03
         sorted_list = self.quadl.sort_data(unsorted_list, 3)
@@ -56,6 +65,12 @@ class TestQuadl(unittest.TestCase):
         list2 = [[1], [2], [3], [4]]
         median2 = self.quadl.calculate_median(list2, 0)
         assert median2 == 2.50, f'median should be 2.50 but got {median2}'
+
+    def test_calculate_stats(self):
+        """
+        Test stats
+        """
+        stats = self.quadl.calculate_stats()
 
 
 if __name__ == '__main__':
