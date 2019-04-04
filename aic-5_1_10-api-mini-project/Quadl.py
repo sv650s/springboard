@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 class Quadl:
 
-    API_KEY = 'JUFS6eBwXFLthN3_ARFz'
+    api_key = None
     response = None
     start_date = None
     end_date = None
@@ -23,12 +23,14 @@ class Quadl:
     column_names = None
 
     def __init__(self,
+                 api_key: str = None,
                  start_date: str = None,
                  end_date: str = None,
                  database_code: str = 'FSE',
                  ticker_code: str = 'AFX_X',
                  order: str = 'asc',
                  format: str = 'json'):
+        self.api_key = api_key
         self.start_date = start_date
         self.end_date = end_date
         self.database_code = database_code
@@ -44,7 +46,7 @@ class Quadl:
         Go out and gets the data based on URL passed
         """
         url = f"https://www.quandl.com/api/v3/datasets/{self.database_code}/{self.ticker_code}/" \
-            f"data.{self.format}?api_key={self.API_KEY}&start_date={self.start_date}&" \
+            f"data.{self.format}?api_key={self.api_key}&start_date={self.start_date}&" \
             f"end_date={self.end_date}&order={self.order}"
         logger.debug(url)
 
@@ -206,21 +208,26 @@ if __name__ == '__main__':
                         help='Start date to pull data', dest='start_date')
     parser.add_argument('--end_date', type=str,
                         help='End date to pull data', dest='end_date')
+    parser.add_argument('--key', type=str,
+                        help='set API key for quadl', dest='key')
     parser.add_argument('--log', type=str, default='INFO',
                         help='set log level for %(prog)s', dest='loglevel')
     args = parser.parse_args()
 
     numeric_level = getattr(logging, args.loglevel.upper())
-    start_date = args.start_date
-    end_date = args.end_date
-    if not isinstance(numeric_level, int):
-        raise ValueError('Invalid log level: %s' % loglevel)
-
     LOGGING_FORMAT = '%(asctime)-15s %(levelname)-10s - %(name)-20s.%(funcName)-15s (%(lineno)d) - %(message)s'
     logging.basicConfig(format=LOGGING_FORMAT, level=numeric_level)
 
+    start_date = args.start_date
+    end_date = args.end_date
+    key = args.key
+    if not isinstance(numeric_level, int):
+        raise ValueError('Invalid log level: %s' % loglevel)
+
+    logger.debug(f"key {key}")
+
     # quadl = Quadl(start_date = '2017-01-01', end_date = '2017-12-31')
-    quadl = Quadl(start_date=start_date, end_date=end_date)
+    quadl = Quadl(api_key = key, start_date = start_date, end_date = end_date)
     quadl.summary()
 
     stats = quadl.calculate_stats()
