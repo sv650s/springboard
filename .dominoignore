@@ -18,6 +18,7 @@ results/run-*/
 
 # Python
 *.pyc
+__pycache__
 
 # R
 .Rhistory
@@ -37,3 +38,5 @@ octave-core
 # General
 ~*
 
+# vscode
+.vscode
