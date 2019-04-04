@@ -4,8 +4,8 @@ import logging
 import argparse
 
 
-
 logger = logging.getLogger(__name__)
+
 
 class Quadl:
 
@@ -17,17 +17,17 @@ class Quadl:
     order = None
     format = None
     data = None
-    json_response = None
+    dataset_data = None
     data = None
     column_names = None
 
-    def __init__(self: "Quadl", 
+    def __init__(self: "Quadl",
                  start_date: str = None,
-                 end_date: str  = None,
+                 end_date: str = None,
                  database_code: str = 'FSE',
                  ticker_code: str = 'AFX_X',
                  order: str = 'asc',
-                 format: str ='json'):
+                 format: str = 'json'):
         self.start_date = start_date
         self.end_date = end_date
         self.database_code = database_code
@@ -35,29 +35,48 @@ class Quadl:
         self.order = order
         self.format = format
 
-        quadl_url = f"https://www.quandl.com/api/v3/datasets/{self.database_code}/{self.ticker_code}/\
-data.{self.format}?api_key={self.API_KEY}&start_date={self.start_date}&\
-end_date={self.end_date}&order={self.order}"
-        logger.debug(quadl_url)
-        self.json_response = requests.get(quadl_url).json()
-        self.data = self.json_response['dataset_data']['data']
-        self.column_names = self.json_response['dataset_data']['column_names']
+    def __get_dataset(self):
+        """
+        Go out and gets the data based on URL passed
+        """
+        url = f"https://www.quandl.com/api/v3/datasets/{self.database_code}/{self.ticker_code}/" \
+            f"data.{self.format}?api_key={self.API_KEY}&start_date={self.start_date}&" \
+            f"end_date={self.end_date}&order={self.order}"
+        logger.debug(url)
 
+        json_response = requests.get(url).json()
+        logger.debug(json_response)
+        # check to make sure the response looks right
+        assert json_response != None
+        assert 'dataset_data' in json_response
+
+        self.dataset_data = json_response['dataset_data']
+        self.data = self.dataset_data['data']
+        self.column_names = self.dataset_data['column_names']
+
+    def sort_data(self, data: list, index: int) -> list:
+        """
+        Sorts the data array by index passed in
+
+        Returns a copy of the list sorted
+        """
+        return sorted(data, key=lambda a: a[index])
 
     def summary(self):
         """
         Inspects the response data from Quadl API call
         """
-        if (self.json_response != None):
+        if (self.dataset_data == None):
+            self.__get_dataset()
+
+        if (self.dataset_data != None):
             print('Summary of Data:')
-            dataset = self.json_response['dataset_data']
-            print(f'\tstart date: {dataset["start_date"]}')
-            print(f'\tend date: {dataset["end_date"]}')
+            print(f'\tstart date: {self.dataset_data["start_date"]}')
+            print(f'\tend date: {self.dataset_data["end_date"]}')
             print(f'\tcolumn names: {self.column_names}')
             print(f'\tdata entries: {len(self.data)}')
         else:
-            print('No data available')
-
+            print('Unable to get data')
 
     def calculate_stats(self) -> dict:
         """
@@ -72,12 +91,15 @@ end_date={self.end_date}&order={self.order}"
         min_open_price, max_open_price, max_two_day_change, average_trading_volume, 
         median_trading_volume
         """
+        if (self.dataset_data == None):
+            self.__get_dataset()
+
         return_dict = {}
 
         min_open_price = 0.0
         max_open_price = 0.0
         # Daily high - low
-        max_daily_change = 0.0 
+        max_daily_change = 0.0
         # closing today - closing yesterday
         max_two_day_change = 0.0
         # sum of all volume
@@ -89,14 +111,13 @@ end_date={self.end_date}&order={self.order}"
         volume_index = self.column_names.index('Traded Volume')
         close_index = self.column_names.index('Close')
 
-
-
         # counter
         count = 1
         for entry in self.data:
             # calculate min/max open price
             current_open_price = entry[open_index]
-            logger.debug(f'count: {count} current_open_price: {current_open_price} current_open_price type: {type(current_open_price)}')
+            logger.debug(
+                f'count: {count} current_open_price: {current_open_price} current_open_price type: {type(current_open_price)}')
             if current_open_price != None:
                 if min_open_price == 0 or current_open_price < min_open_price:
                     min_open_price = current_open_price
@@ -125,13 +146,12 @@ end_date={self.end_date}&order={self.order}"
             volume = entry[volume_index]
             if volume != None:
                 total_volume += volume
-            
-            count += 1
 
+            count += 1
 
         # copy the list then calculate median trading volume
         data_length = len(self.data)
-        sorted_data = sorted(self.data, key = lambda a: self.data[volume_index])
+        sorted_data = self.sort_data(self.data, volume_index)
         median_volume = 0.0
         median_index = data_length // 2
         if data_length == 1:
@@ -139,10 +159,8 @@ end_date={self.end_date}&order={self.order}"
         elif data_length % 2 > 0:
             median_volume = sorted_data[median_index][volume_index]
         else:
-            median_volume = (sorted_data[median_index][volume_index] + \
-                sorted_data[median_index - 1][volume_index]) / 2
-
-
+            median_volume = (sorted_data[median_index][volume_index] +
+                             sorted_data[median_index - 1][volume_index]) / 2
 
         return_dict['min_open_price'] = min_open_price
         return_dict['max_open_price'] = max_open_price
@@ -155,8 +173,6 @@ end_date={self.end_date}&order={self.order}"
         return return_dict
 
 
-
-
 if __name__ == '__main__':
     """
     Testing call to run this as a standalone program
@@ -164,9 +180,12 @@ if __name__ == '__main__':
     To specify log level use --log=<log level>
     """
     parser = argparse.ArgumentParser(description='Utility for quadl API')
-    parser.add_argument('--start_date', type = str, help = 'Start date to pull data', dest='start_date')
-    parser.add_argument('--end_date', type = str, help = 'End date to pull data', dest='end_date')
-    parser.add_argument('--log', type = str, default = 'INFO', help = 'set log level for %(prog)s', dest='loglevel')
+    parser.add_argument('--start_date', type=str,
+                        help='Start date to pull data', dest='start_date')
+    parser.add_argument('--end_date', type=str,
+                        help='End date to pull data', dest='end_date')
+    parser.add_argument('--log', type=str, default='INFO',
+                        help='set log level for %(prog)s', dest='loglevel')
     args = parser.parse_args()
 
     numeric_level = getattr(logging, args.loglevel.upper())
@@ -176,12 +195,11 @@ if __name__ == '__main__':
         raise ValueError('Invalid log level: %s' % loglevel)
 
     LOGGING_FORMAT = '%(asctime)-15s %(levelname)-10s - %(name)-20s.%(funcName)-15s (%(lineno)d) - %(message)s'
-    logging.basicConfig(format = LOGGING_FORMAT, level=numeric_level)
-
+    logging.basicConfig(format=LOGGING_FORMAT, level=numeric_level)
 
     # quadl = Quadl(start_date = '2017-01-01', end_date = '2017-12-31')
-    quadl = Quadl(start_date = start_date, end_date = end_date)
-    response = quadl.json_response
+    quadl = Quadl(start_date=start_date, end_date=end_date)
+    response = quadl.dataset_data
     logger.debug(pformat(response))
     quadl.summary()
 
@@ -191,8 +209,6 @@ if __name__ == '__main__':
     logger.info(f'max open: {return_dict["max_open_price"]}')
     logger.info(f'max daily chnage: {return_dict["max_daily_change"]}')
     logger.info(f'max 2 day chnage: {return_dict["max_two_day_change"]}')
-    logger.info(f'average trading volume: {return_dict["average_trading_volume"]}')
+    logger.info(
+        f'average trading volume: {return_dict["average_trading_volume"]}')
     logger.info(f'median volume: {return_dict["median_volume"]}')
-
-
-
