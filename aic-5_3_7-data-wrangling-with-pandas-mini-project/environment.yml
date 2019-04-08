@@ -1,0 +1,12 @@
+name: aic-5_3_7-data-wrangling-with-pandas-mini-project
+channels:
+  - defaults
+dependencies:
+  - python=3.7.*
+  - autopep8
+  - pandas=0.24.2
+  - unittest2
+  - jupyter
+  - matplotlib
+prefix: /Users/vinceluk/anaconda3/envs/aic-5_3_7-data-wrangling-with-pandas-mini-project
+
