@@ -1,0 +1,12 @@
+name: aic-5_6_6-sql-at-scale-with-spark-mini-project
+channels:
+  - defaults
+dependencies:
+  - python>=3.7.*
+  - pandas>=0.24.2
+  - jupyter
+  - regex
+  - unittest2
+  - pyspark
+prefix: /Users/vinceluk/Dropbox/0_springboard/springboard-aic-mini-projects/aic-5_6_6-sql-at-scale-with-spark-mini-project
+

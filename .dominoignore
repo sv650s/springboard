@@ -40,3 +40,6 @@ octave-core
 
 # vscode
 .vscode
+
+# docker
+docker-spark-cluster
