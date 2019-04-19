@@ -1,1 +1,4 @@
-domino.log
+.domino*
+domino*
+*/metastore_db/*
+.DS_Store
