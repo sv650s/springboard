@@ -1,0 +1,15 @@
+name: aic-8_1_3-linear-regression-mini-project
+channels:
+  - defaults
+dependencies:
+  - python=3.7.*
+  - autopep8
+  - pandas
+  - unittest2
+  - jupyter
+  - matplotlib
+  - seaborn
+  - scipy
+  - scikit-learn
+prefix: /Users/vinceluk/Dropbox/0_springboard/springboard-aic-mini-projects/aic-8_1_3-linear-regression-mini-project
+
