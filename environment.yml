@@ -1,0 +1,14 @@
+name: sb-mini-projects
+channels:
+  - defaults
+dependencies:
+  - python=3.7.*
+  - autopep8
+  - pandas
+  - unittest2
+  - jupyter
+  - matplotlib
+  - seaborn
+  - scipy
+  - scikit-learn
+
