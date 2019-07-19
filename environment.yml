@@ -1,14 +1,19 @@
 name: sb-mini-projects
 channels:
   - defaults
+  - conda-forge
+  - akode
 dependencies:
   - python=3.7.*
   - autopep8
   - pandas
   - unittest2
   - jupyter
+  - jupyter-spark
   - matplotlib
+  - pyspark
   - seaborn
   - scipy
   - scikit-learn
+  - jupyterlab
 
